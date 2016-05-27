@@ -27,7 +27,7 @@ class FlagAdmin(admin.ModelAdmin):
     list_display = ('name', 'note', 'everyone', 'percent', 'superusers',
                     'staff', 'authenticated', 'languages')
     list_filter = ('everyone', 'superusers', 'staff', 'authenticated')
-    raw_id_fields = ('users', 'groups')
+    raw_id_fields = ('users', 'groups', 'accounts',)
     ordering = ('-id',)
 
 

@@ -21,6 +21,9 @@ else:
 
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
+CUSTOM_ACCOUNT_MODEL = getattr(settings, 'WAFFLE_CUSTOM_ACCOUNT_MODEL')
+CUSTOM_ACCOUNT_LOOKUP_FUNCTION = getattr(settings, 'WAFFLE_CUSTOM_ACCOUNT_LOOKUP_FUNCTION')
+
 CLASS_TYPES = (type,)
 if not PY3:
     CLASS_TYPES = (type, types.ClassType)
