@@ -10,7 +10,7 @@ from django.db import models
 from django.db.models.signals import post_save, post_delete, m2m_changed
 from django.utils.encoding import python_2_unicode_compatible
 
-from waffle.compat import AUTH_USER_MODEL, cache
+from waffle.compat import AUTH_USER_MODEL, CUSTOM_ACCOUNT_MODEL, cache
 from waffle.utils import get_setting, keyfmt
 
 
@@ -45,6 +45,7 @@ class Flag(models.Model):
         'Activate this flag for these user groups.'))
     users = models.ManyToManyField(AUTH_USER_MODEL, blank=True, help_text=(
         'Activate this flag for these users.'))
+    accounts = models.ManyToManyField(CUSTOM_ACCOUNT_MODEL, blank=True, help_text=('Activate this flag for these accounts.'))
     rollout = models.BooleanField(default=False, help_text=(
         'Activate roll-out mode?'))
     note = models.TextField(blank=True, help_text=(

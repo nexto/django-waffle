@@ -114,3 +114,6 @@ if django.VERSION < (1, 7):
     SOUTH_MIGRATION_MODULES = {
         'waffle': 'waffle.south_migrations'
     }
+
+WAFFLE_CUSTOM_ACCOUNT_MODEL = 'admin.LogEntry'
+WAFFLE_CUSTOM_ACCOUNT_LOOKUP_FUNCTION = lambda user: {}

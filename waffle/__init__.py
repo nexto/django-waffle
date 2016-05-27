@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from decimal import Decimal
 import random
 
+from waffle.compat import CUSTOM_ACCOUNT_MODEL, CUSTOM_ACCOUNT_LOOKUP_FUNCTION
 from waffle.utils import get_setting, keyfmt
 
 
@@ -89,6 +90,12 @@ def flag_is_active(request, flag_name):
     user_groups = user.groups.all()
     for group in flag_groups:
         if group in user_groups:
+            return True
+
+    account = CUSTOM_ACCOUNT_LOOKUP_FUNCTION(request.user)
+    if account:
+        flag_accounts = flag.accounts.all()
+        if account in flag_accounts:
             return True
 
     if flag.percent and flag.percent > 0:
