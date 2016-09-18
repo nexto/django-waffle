@@ -82,16 +82,6 @@ def flag_is_active(request, flag_name):
     if user in flag_users:
         return True
 
-    flag_groups = cache.get(keyfmt(get_setting('FLAG_GROUPS_CACHE_KEY'),
-                                   flag.name))
-    if flag_groups is None:
-        flag_groups = flag.groups.all()
-        cache_flag(instance=flag)
-    user_groups = user.groups.all()
-    for group in flag_groups:
-        if group in user_groups:
-            return True
-
     account = CUSTOM_ACCOUNT_LOOKUP_FUNCTION(request.user)
     if account:
         flag_accounts = flag.accounts.all()

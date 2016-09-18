@@ -41,8 +41,6 @@ class Flag(models.Model):
     languages = models.TextField(blank=True, default='', help_text=(
         'Activate this flag for users with one of these languages (comma '
         'separated list)'))
-    groups = models.ManyToManyField(Group, blank=True, help_text=(
-        'Activate this flag for these user groups.'))
     users = models.ManyToManyField(AUTH_USER_MODEL, blank=True, help_text=(
         'Activate this flag for these users.'))
     accounts = models.ManyToManyField(CUSTOM_ACCOUNT_MODEL, blank=True, help_text=('Activate this flag for these accounts.'))
@@ -125,8 +123,6 @@ def cache_flag(**kwargs):
         cache.add(keyfmt(get_setting('FLAG_CACHE_KEY'), f.name), f)
         cache.add(keyfmt(get_setting('FLAG_USERS_CACHE_KEY'), f.name),
                   f.users.all())
-        cache.add(keyfmt(get_setting('FLAG_GROUPS_CACHE_KEY'), f.name),
-                  f.groups.all())
 
 
 def uncache_flag(**kwargs):
@@ -134,7 +130,6 @@ def uncache_flag(**kwargs):
     data = {
         keyfmt(get_setting('FLAG_CACHE_KEY'), flag.name): None,
         keyfmt(get_setting('FLAG_USERS_CACHE_KEY'), flag.name): None,
-        keyfmt(get_setting('FLAG_GROUPS_CACHE_KEY'), flag.name): None,
         keyfmt(get_setting('ALL_FLAGS_CACHE_KEY')): None
     }
     cache.set_many(data, 5)
@@ -143,8 +138,6 @@ post_save.connect(uncache_flag, sender=Flag, dispatch_uid='save_flag')
 post_delete.connect(uncache_flag, sender=Flag, dispatch_uid='delete_flag')
 m2m_changed.connect(uncache_flag, sender=Flag.users.through,
                     dispatch_uid='m2m_flag_users')
-m2m_changed.connect(uncache_flag, sender=Flag.groups.through,
-                    dispatch_uid='m2m_flag_groups')
 
 
 def cache_sample(**kwargs):

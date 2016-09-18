@@ -130,27 +130,6 @@ class WaffleTests(TestCase):
         self.assertEqual(b'off', response.content)
         assert 'dwf_myflag' not in response.cookies
 
-    def test_group(self):
-        """Test the per-group switch."""
-        group = Group.objects.create(name='foo')
-        user = User.objects.create(username='bar')
-        user.groups.add(group)
-
-        flag = Flag.objects.create(name='myflag')
-        flag.groups.add(group)
-
-        request = get()
-        request.user = user
-        response = process_request(request, views.flag_in_view)
-        self.assertEqual(b'on', response.content)
-        assert 'dwf_myflag' not in response.cookies
-
-        request.user = User(username='someone_else')
-        request.user.save()
-        response = process_request(request, views.flag_in_view)
-        self.assertEqual(b'off', response.content)
-        assert 'dwf_myflag' not in response.cookies
-
     def test_authenticated(self):
         """Test the authenticated/anonymous switch."""
         Flag.objects.create(name='myflag', authenticated=True)

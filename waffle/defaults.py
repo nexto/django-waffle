@@ -9,7 +9,6 @@ MAX_AGE = 2592000  # 1 month in seconds
 CACHE_PREFIX = 'waffle:'
 FLAG_CACHE_KEY = 'flag:%s'
 FLAG_USERS_CACHE_KEY = 'flag:%s:users'
-FLAG_GROUPS_CACHE_KEY = 'flag:%s:groups'
 ALL_FLAGS_CACHE_KEY = 'flags:all'
 SAMPLE_CACHE_KEY = 'sample:%s'
 ALL_SAMPLES_CACHE_KEY = 'samples:all'
